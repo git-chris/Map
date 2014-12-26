@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>        
+        
+        <title>My City Map</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <link href="css/style.css" rel="stylesheet" />
+        <script src="https://maps.googleapis.com/maps/api/js"></script>        
+        <script src="js/appengine.js"></script>              
+        <script src="js/libs/knockout/knockout-3.2.0.js"></script>
+    </head>
+    <body>
+        <div id="map-canvas"></div>         
+        <div id="list-button"><img src="images/list.png" /></div>
+        <div id="list">
+            <ul data-bind="foreach : places"><li data-bind="text: name"></li></ul>                         
+        </div>        
+        <input id="search-filter" placeholder="Search…" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">        
+    </body>
+</html>
