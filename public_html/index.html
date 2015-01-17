@@ -11,26 +11,40 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
         <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
         <link href="css/style.css" rel="stylesheet" />
-        <script src="https://maps.googleapis.com/maps/api/js"></script>               
+        <script src="https://maps.googleapis.com/maps/api/js"></script>                     
     </head>
     <body>
         <div id="map-canvas"></div>         
         <div id="list-button"><img src="images/list.png" /></div>
         <div id="list">
-            <input id="search-filter" placeholder="Filter by type: ex. Restaurant…" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="on">            
-                <ul data-bind="template: {name:'place', foreach: pois}"></ul> 
-                    <script type="text/html" id="place">                                            
-                        <li>
-                            <a href="javascript:google.maps.event.trigger(gmarkers,'click');"><strong data-bind="text: name"></strong>
-                            </a>
-                        </li>  
+            <input id="search-filter" placeholder="Filter by type: ex. Restaurant…" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="on"> 
+                       
+                <ul data-bind="template: {name:'place', foreach: pois}"></ul>
+                    <script type="text/html" id="place">                        
+                        <li class="box" data-bind="click: $parent.mark">
+                            <h3 data-bind="text: name"></h3>
+                            <p>Address</p>
+                        </li>
                     </script>
+        </div>
+        
+        
+            <div id="wea" class="text">Weather in Patras
+                <div id="weatherBox" class="text">            
+                <div id="wicon"></div>  
+                </div>
+            </div>    
 
-        </div>
-        <div id="weather">
-            <span></span>
-        </div>
+        <div id="Insights" class="text">iNSIGHTS</div>
+            <form id="GoogleInsights" data-bind="submit : speedTest">
+                <input data-bind="value: url"><button>Test</button>
+            </form>
+            <span id="result" class="text">RESULT</span>
+        
+       
+
         <script src="js/libs/knockout/knockout-3.2.0.js"></script>
         <script src="js/appengine.js"></script>         
     </body>
