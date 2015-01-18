@@ -19,7 +19,7 @@ var gmarkers=new Array();
                 position: myLatLng,
                 map: map,                
                 title: poi.name ,
-                html:poi.name+'<hr><img src="https://maps.googleapis.com/maps/api/streetview?size=1080x720&location='+poi.lat+','+poi.lon+'"></img>'                                          
+                html:poi.name+'<hr><img src="https://maps.googleapis.com/maps/api/streetview?size=400x400&location='+poi.lat+','+poi.lon+'"></img>'                                          
             });
 
             var current_marker=gmarkers[0];//set current marker for checking with the bounce function
@@ -55,9 +55,9 @@ var gmarkers=new Array();
     });
 
     //get weather data
+    $("#weatherBox").hide();
     $.getJSON("https://api.worldweatheronline.com/free/v2/weather.ashx?key=161b7267009ac46bba0ead639ae1a&format=Json&q=Patras+GREECE&num_of_days=1", function(r){
-        console.log(r);
-        $("#weatherBox").hide();
+        console.log(r);        
         $("#weatherBox").append("Today:"+r.data.weather[0].date+"<br>");
         var img = document.createElement('img');
         img.src = r.data.current_condition[0].weatherIconUrl[0].value;
@@ -67,21 +67,40 @@ var gmarkers=new Array();
         $("#weatherBox").append("Wind_Speed:"+r.data.current_condition[0].windspeedKmph+" km<br>");
         $("#weatherBox").append("Humidity: "+r.data.current_condition[0].humidity+"<hr>");
     }).error(function(e){$("#weatherBox").append("Something Went Wrong With The Request");});
+    
+    $("#GoogleInsights").hide();
+    $.getJSON("https://www.googleapis.com/pagespeedonline/v2/runPagespeed?url="+document.URL,function(r){
+                $("#wait").hide();
+                console.log(r);
+                rules=r.formattedResults.ruleResults;                
+                $("#GoogleInsights").append('Site is : '+r.id);
+                $("#GoogleInsights").append('<br>Page Score: '+r.ruleGroups.SPEED.score);
+                $("#GoogleInsights").append("<br><p>Things That Need Attention</p><hr>");
+                
+                $("#GoogleInsights").append("<tr><td><u>Rule</td><td><u>Rule Impact</td></tr>");
+                for(rule in rules){                    
+                    if(rules[rule].ruleImpact){$("#GoogleInsights").append("<tr><td class='rule'>"+rules[rule].localizedRuleName+"<p class='disc'>"+rules[rule].summary.format+"</p></td><td>"+rules[rule].ruleImpact+"</td></tr>");};              
+                };
+                
+                
+            }).error(function(e){$("#wait").hide();$("#GoogleInsights").append('<h3 style="text-center">Error with Connection</h3>');});
+            
+    
 
     var pois = [
-        {name:'Archeological Museum',lat: 38.263280, lon:21.752264,type:'Mus',id:0},
-        {name:'Folk Arts Museum',lat: 38.235104,lon: 21.731665,type:'Mus',id:1},
-        {name:'Press Museum',lat:38.241323,lon: 21.728168,type:'Mus',id:2},
-        {name:'Science and Arts Museum',lat:38.287907, lon:21.784634,type:'Mus',id:3},    
-        {name:'ATEI Patron-Technological Schools',lat:38.218944,lon: 21.747987,type:'Edu',id:4},
-        {name:'Patras University',lat:38.287776,lon:21.784623,type:'Edu',id:5},    
-        {name:'Pantheon Theatre',lat:38.243550,lon: 21.733256,type:'The',id:6},
-        {name:'Apollon - Town Theatre',lat:38.246488,lon: 21.735316,type:'The',id:7},
-        {name:"Faros - Town's Old Lighthouse",lat:38.247767,lon: 21.728286,type:'Other',id:8},
-        {name:'Town Center-King Georgios the 1st Square',lat:38.246284,lon: 21.735078,type:'Other',id:9},
-        {name:'Ginger Restaurant',lat:38.245423,lon: 21.731836,type:'Food',id:10},
-        {name:'Krokos',lat:38.248464,lon :21.737076,type:'Food',id:11},
-        {name:'Pizza Express',lat:38.252137,lon:21.743126,type:'Food',id:12},
+        {name:'Archeological Museum',lat: 38.263347,lon:21.752353,type:'Mus',id:0},
+        {name:'Folk Arts Museum',lat: 38.234798,lon:21.731757,type:'Mus',id:1},
+        {name:'Press Museum',lat:38.241329,lon:21.728152,type:'Mus',id:2},
+        {name:'Science and Arts Museum',lat:38.287776,lon:21.784623,type:'Mus',id:3},    
+        {name:'ATEI Patron-Technological Schools',lat:38.218946,lon:21.747986,type:'Edu',id:4},
+        {name:'Patras University',lat:38.28923,lon:21.785369,type:'Edu',id:5},    
+        {name:'Pantheon Theatre',lat:38.243736,lon:21.733046,type:'The',id:6},
+        {name:'Apollon - Town Theatre',lat:38.246777,lon:21.734509,type:'The',id:7},
+        {name:"Faros - Town's Old Lighthouse",lat:38.24775,lon:21.728294,type:'Other',id:8},
+        {name:'Town Center-King Georgios the 1st Square',lat:38.2462754,lon:21.7345912,type:'Other',id:9},
+        {name:'Ginger Restaurant',lat:38.245427,lon:21.731836,type:'Food',id:10},
+        {name:'Krokos',lat:38.248483,lon:21.737057,type:'Food',id:11},
+        {name:'Pizza Express',lat:38.2490144,lon:21.7456058,type:'Food',id:12},
         {name:'Gelatino',lat:38.2425114,lon:21.730485,type:'Food',id:13}
     ];
 
@@ -102,10 +121,7 @@ var gmarkers=new Array();
             $('#weatherBox').slideToggle();           
         });
         $('#Insights').click(function(){
-            $('#GoogleInsights').slideToggle();
-        });
-        $('#Insights').click(function(){
-            $('#result').slideToggle();
+            $('#GoogleInsights').toggle('slow');
         });   
     });
 
@@ -120,8 +136,7 @@ $(function() {
             //function that connects list divs with markers
             mark :  function(poi){
                 google.maps.event.trigger(gmarkers[poi.id],'click');
-            },
-            url: ko.observable(null)//url provided by the user for speedTest by Google Insights                              
+            }                             
         };
 
 
@@ -132,12 +147,7 @@ $(function() {
             });
         }, viewModel);
 
-        viewModel.speedTest=function(url){
-            var self=this;                   
-            $.getJSON("https://www.googleapis.com/pagespeedonline/v2/runPagespeed?url="+self.url(),function(r){
-                                
-            });
-        };
+        
 
     google.maps.event.addDomListener(window, 'load', initialize);
 
