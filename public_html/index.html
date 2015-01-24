@@ -5,48 +5,73 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html>
-    <head>        
-        
+    <head>
         <title>My City Map</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
         <link href="css/style.css" rel="stylesheet" />
-        <script src="https://maps.googleapis.com/maps/api/js"></script>                     
+        <script src="https://maps.googleapis.com/maps/api/js"></script>
     </head>
     <body>
-        <div id="map-canvas"></div>         
-        <div id="list-button"><img src="images/list.png" /></div>
+        <div id="map-canvas"></div>
+        <div id="list-button"><img data-bind="attr:{src: listIcon}" /></div>
+        <!-- List of places with input filter -->
         <div id="list">
-            <input id="search-filter" placeholder="Filter by type: ex. Restaurant…" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="on"> 
-                       
-                <ul data-bind="template: {name:'place', foreach: pois}"></ul>
-                    <script type="text/html" id="place">                        
-                        <li class="box" data-bind="click: $parent.mark">
-                            <h3 data-bind="text: name"></h3>
-                            <p>Address</p>
-                        </li>
-                    </script>
+            <input id="search-filter" placeholder="Filter by type: ex. Restaurant…" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="on">
+            <ul data-bind="template: {name:'place', foreach: pois}"></ul>
+            <script type="text/html" id="place">
+                <!-- $parent.mark function is called for marker connecting with div -->
+                <li class="box" data-bind="click: $parent.mark">
+                    <h3 data-bind="text: name"></h3>
+                </li>
+            </script>
         </div>
-        
-        
-            <div id="wea" class="text">Weather in Patras
-                <div id="weatherBox" class="text">            
-                <div id="wicon"></div>  
+        <!-- Weather Element -->
+        <div id="wea" class="text">Weather in Patras
+            <div id="weatherBox" class="text">
+                <!-- Div displays if there is a success response from weather Api  -->
+                <div data-bind="if: wVis">
+                    Date: <p data-bind="text: date"></p><br>
+                    Temp in &#8451 :   <p data-bind="text: mintemp"></p>.....<p data-bind="text: maxtemp"></p><br>
+                    <div>Weather Right Now
+                        <img data-bind="attr:{src: iconUrl}"/><br>
+                        Current Temp is :<p data-bind="text: temp"></p>&#8451<br>
+                        Humidity: <p data-bind="text: humidity"><hr>
+                    </div>
                 </div>
-            </div>    
-        
-        <div id="Insights" class="text"><button><img src="images/pagespeed.png"/></button></div>
-        <div id="GoogleInsights" >
-            <h3>Google Insights Results</h3>            
-            <img id="wait" src="images/page-loader.gif" alt="Loader"/>
+                <!-- Message displays if there is not a succesfull response from weather Api  -->
+                <p data-bind="ifnot: wVis">!Failed to Connect with Api!</p>
+            </div>
         </div>
-            
-        
-       
-
+        <!-- Google Insights button and display box -->
+        <div id="Insights" class="text"><button><img data-bind="attr:{src: speedIcon}" alt="Icon for Speed Results"></button></div>
+        <div id="GoogleInsights">
+            <div data-bind="if: sVis">
+                <h3>Google Insights Results</h3>
+                <span data-bind="if: waitVis"><img id="wait" data-bind="attr:{src: waitIcon}" alt="Loader"></span>
+                <p data-bind="ifnot: waitVis">Overall Score : <strong data-bind="text: speed"></strong></p>
+                <table data-bind="ifnot: waitVis">
+                    <thead>
+                        <tr>
+                            <th>Rule (*)</th>
+                            <th>Rule Impact(**)</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: rules">
+                        <tr>
+                            <td data-bind="text: localizedRuleName"></td>
+                            <td data-bind="text: ruleImpact"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="details" data-bind="ifnot: waitVis">* Rule refers to "methods" that can speed up our page loading!</p>
+                <p class="details" data-bind="ifnot: waitVis">** Rule Impact is an index that shows how much impact the method will have!</p>
+            </div>
+            <h2 class="fail" data-bind="ifnot: sVis">Error With Connection</h2>
+        </div>
         <script src="js/libs/knockout/knockout-3.2.0.js"></script>
-        <script src="js/appengine.js"></script>         
+        <script src="js/appengine.js"></script>
     </body>
 </html>

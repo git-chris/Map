@@ -1,11 +1,11 @@
-body, 
-html {    
+body,
+html {
     height: 100%;
-    margin: 0; 
+    margin: 0;
 }
-    
-#map-canvas {    
-    height: 100%;         
+
+#map-canvas {
+    height: 100%;
 }
 
 #list {
@@ -13,30 +13,30 @@ html {
     width: 190px;
     height: 82%;
     right: 0px;
-    top: 40px;       
+    top: 40px;
     margin-right: -200px;
-    overflow-y: auto;   
+    overflow-y: auto;
     box-shadow: -5px 8px  10px #777;
 }
 
 #list-button {
-    position: fixed;    
-    right: 0px;    
-    top: 100px;    
+    position: fixed;
+    right: 0px;
+    top: 100px;
 }
 
 #list-button img{
     height: 40px;
 }
 
-#search-filter {   
+#search-filter {
     width: 100%;
     height: 30px;
 }
 
-.box {  
-    width: 100%;    
-    margin-left: -30px;      
+.box {
+    width: 100%;
+    margin-left: -30px;
     color: #DC4A38;
     padding: 8px;
     border: 1px solid #DC4A38;
@@ -56,23 +56,27 @@ html {
 
 #weatherBox {
     background: #DC4A38;
-    height: 200px;
+    height: 180px;
     width: 180px;
     margin-top: 3px;
     margin-left: -4px;
     font-size: 80%;
     color: #fff;
-    position: relative;    
+    position: relative;
+}
+
+#weatherBox p{
+    display: inline;
 }
 
 #wea {
     background-color: #fff;
-    width:180px;
+    width: 180px;
     height: 20px;
     position: fixed;
     top: 30px;
     left: 200px;
-    -webkit-box-shadow: 0 10px 6px -6px #777;    
+    -webkit-box-shadow: 0 10px 6px -6px #777;
     text-align: left;
     color: #DC4A38;
     cursor: move;
@@ -81,7 +85,7 @@ html {
 #Insights {
     position: fixed;
     bottom: 270px;
-    left: 10px;    
+    left: 10px;
 }
 
 #Insights img {
@@ -92,9 +96,9 @@ html {
     position: fixed;
     bottom: 230px;
     left: 90px;
-    width:500px;
-    height:200px;
-    border:2px solid #333;
+    width: 500px;
+    height: 200px;
+    border: 2px solid #333;
     overflow-y: auto;
     background-color: #DC4A38;
     color: #fff;
@@ -103,11 +107,11 @@ html {
 
 .text {
     font-family: "Lucida Sans Unicode";
-    padding: 4px;  
+    padding: 4px;
 }
 
 ul {
-    list-style-type: none;    
+    list-style-type: none;
 }
 
 h3 {
@@ -116,7 +120,9 @@ h3 {
 
 #wait {
     width: 80px;
-    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 
 .rule:hover {
@@ -133,4 +139,39 @@ h3 {
     display: none;
     background: #fff;
     color: #DC4A38;
+}
+
+.fail {
+    text-align: center;
+}
+
+table {
+    width: 100%;
+}
+
+th {
+    height: 20px;
+}
+
+table,th,td{
+    border: 1px solid #fff;
+}
+
+@media screen and (max-width: 640px) {
+    #GoogleInsights {
+        position: fixed;
+        bottom: 20px;
+        max-width: 50%;
+        left: 10px;
+    }
+    
+    #wea {
+        top: 5px;
+        left: 30%;
+        display: block;
+    }
+    
+    #list-button {        
+        top: 350px;;        
+    }
 }
