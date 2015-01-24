@@ -19,3 +19,5 @@ Type foo for FOOD
 Also there is a weatherBox with current weather in Patras which is dragable(Click and Hold with mouse and it moves).
 
 Speed file icon is for Google insights and displays the sites own score.
+
+I used sample code for sliding elements and filtering list with knockout from js fiddle examples.
