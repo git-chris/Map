@@ -182,6 +182,9 @@ $(function() {
      * save only the rules that will have an affect on speed
      * and overall speed score
      * While getting response gif loader displays
+     * Link works for hosting online
+     * In the case you want to check localy then replace the code document.URL with an appropriate url of another page you want to check
+     * for example "......?url=http://www.example.com"
      */
     $.getJSON("https://www.googleapis.com/pagespeedonline/v2/runPagespeed?url="+document.URL,function(r){
     }).success(function(r){
