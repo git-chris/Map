@@ -24,3 +24,6 @@ I used sample code for sliding elements and filtering list with knockout from js
 
 ***Notice for Googles Insights BOX. The box works for hosting online, the link is applied by using URL element taken from DOM. For hosting localy you must provide the url of another page of your choosing and check those results. For example
 http://www.example.com. Just replace the code on appengine.js
+
+Page is hosted on :
+http://git-chris.github.io/Map/public_html/
